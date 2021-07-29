@@ -15,7 +15,7 @@ public class CliSimpleAskView {
 
     private final String message;
 
-    public boolean run() {
+    public boolean ask() {
         for (int i = 0; i < REPEAT_COUNT + 1; i++) {
             System.out.println(message);
             String answer = SCANNER.nextLine();

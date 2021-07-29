@@ -1,5 +1,6 @@
 package com.hillel.project.entities;
 
-public class User {
-
+public interface User {
+    String getLogin();
+    String getPass();
 }

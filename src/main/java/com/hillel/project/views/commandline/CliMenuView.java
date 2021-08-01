@@ -15,8 +15,7 @@ public class CliMenuView {
     public Integer run() {
         Scanner scanner = new Scanner(System.in);
         show();
-        int value = scanner.nextInt();
-        return null;
+        return scanner.nextInt();
     }
 
     private void show() {

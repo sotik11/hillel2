@@ -1,9 +1,12 @@
 package com.hillel.project.controllers.commandline;
 
+import com.hillel.project.controllers.ExitController;
 import com.hillel.project.controllers.LogoutController;
 import com.hillel.project.controllers.MainController;
 import com.hillel.project.controllers.Controller;
 import com.hillel.project.entities.User;
+import com.hillel.project.repositories.UserRepository;
+import com.hillel.project.repositories.UserRepositorySerialized;
 import com.hillel.project.views.commandline.CliControllerRunnableMenuView;
 
 public class CliMainController implements MainController {
@@ -17,7 +20,9 @@ public class CliMainController implements MainController {
             Controller controller = new CliControllerRunnableMenuView()
                     .withOptions("Profile", new CliProfileController())
                     .withOptions("New message", new CliMessageSenderController())
-                    // TODO: add Messages, Settings, Exit, LogOut
+                    .withOptions("Log out", new CliLogoutController())
+                    .withOptions("Exit", new CliExitController())
+                    // TODO: add Messages, Settings
                     .runAndGetNextController();
 
             if (controller instanceof LogoutController) {
@@ -27,13 +32,14 @@ public class CliMainController implements MainController {
                     continue;
                 }
             }
-//            if (controller instanceof ExitController) {
-//                boolean exit = ((ExitController) controller).start();
-//                if (exit) {
-//                    System.out.println("Byy!");
-//                    return;
-//                }
-//            }
+            if (controller instanceof ExitController) {
+                boolean exit = ((ExitController) controller).start();
+                if (exit) {
+                    System.out.println("Byy!");
+                    ((UserRepositorySerialized) UserRepository.getInstance()).close();
+                    return;
+                }
+            }
         }
 
 
